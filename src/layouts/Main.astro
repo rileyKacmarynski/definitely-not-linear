@@ -1,40 +1,40 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="bg-slate-900 scroll-smooth scroll-pt-12" style="color-scheme: dark;">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="bg-slate-900 text-slate-200 min-h-screen">
-		<div class="flex flex-col w-full">
-			<header class="h-12 bg-transparent px-5 flex items-center fixed inset-0 max-w-[var(--max-width)] mx-auto">
-				nav goes here
-			</header>
-			<slot />
-		</div>
-	</body>
+<html lang='en' class='bg-slate-900 scroll-smooth scroll-pt-12' style='color-scheme: dark;'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class='bg-slate-900 text-slate-200 min-h-screen'>
+    <div class='flex flex-col w-full'>
+      <header class='h-12 bg-transparent container flex items-center fixed inset-0 mx-auto'>
+        nav goes here
+      </header>
+      <slot />
+    </div>
+  </body>
 </html>
 <style is:global>
-	:root {
-		--max-width: 1200px
-	}
+  :root {
+    --max-width: 1200px;
+  }
 
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+  html {
+    font-family: system-ui, sans-serif;
+    background-color: #f6f6f6;
+  }
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+      Courier New, monospace;
+  }
 </style>

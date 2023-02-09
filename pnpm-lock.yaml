@@ -11,6 +11,7 @@ specifiers:
   react: ^18.0.0
   react-dom: ^18.0.0
   tailwindcss: ^3.0.24
+  tailwindcss-animate: ^1.0.5
 
 dependencies:
   '@astrojs/react': 2.0.2_fxtgt6bjwd6p4cwoordejim2zi
@@ -23,6 +24,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   tailwindcss: 3.2.4
+  tailwindcss-animate: 1.0.5_tailwindcss@3.2.4
 
 packages:
 
@@ -2988,6 +2990,14 @@ packages:
     dependencies:
       '@pkgr/utils': 2.3.1
       tslib: 2.5.0
+    dev: false
+
+  /tailwindcss-animate/1.0.5_tailwindcss@3.2.4:
+    resolution: {integrity: sha512-UU3qrOJ4lFQABY+MVADmBm+0KW3xZyhMdRvejwtXqYOL7YjHYxmuREFAZdmVG5LPe5E9CAst846SLC4j5I3dcw==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+    dependencies:
+      tailwindcss: 3.2.4
     dev: false
 
   /tailwindcss/3.2.4:
