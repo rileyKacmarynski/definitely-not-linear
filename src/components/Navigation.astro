@@ -1,0 +1,45 @@
+---
+import { ChevronDown, Hexagon } from 'lucide-react';
+import CtaButton from './ui/CtaButton.astro';
+import NavLink from './ui/NavLink.astro';
+---
+
+<header class='z-50 h-12 bg-transparent flex items-center fixed inset-0 mx-auto'>
+  <div
+    class='absolute top-0 w-full h-16 backdrop-blur-md [mask-image:linear-gradient(to_bottom,_black_3rem,_transparent)]'
+  >
+  </div>
+  <nav class='relative container font-semibold w-full h-12'>
+    <ul class='text-sm border-b border-b-white/10 flex items-center gap-7 h-12 font-'>
+      <li>
+        <a href='#' class='flex items-center'>
+          <Hexagon className='fill-slate-300 stroke-none' />
+          <span class='ml-1 text-base'>!Linear</span>
+        </a>
+      </li>
+      <li>
+        <NavLink href='#'>Features</NavLink>
+      </li>
+      <li>
+        <NavLink href='#'>Method</NavLink>
+      </li>
+      <li>
+        <NavLink href='#'>Pricing</NavLink>
+      </li>
+      <li>
+        <NavLink href='#' class='group flex items-center'>
+          <span class='mr-1'>Company</span>
+          <!-- this shouldn't be a react component, but I'm lazy -->
+          <ChevronDown size="14" className='group-hover:rotate-180 transition-all' />
+        </NavLink>
+      </li>
+      <li class='ml-auto'>
+        <NavLink href='#'>Log in</NavLink>
+      </li>
+      <li>
+        <CtaButton size='sm'>Sign up</CtaButton>
+      </li>
+    </ul>
+  </nav>
+</header>
+<style></style>
