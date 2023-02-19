@@ -1,5 +1,6 @@
 ---
-import { ChevronDown, Hexagon } from 'lucide-react';
+import { Hexagon } from 'lucide-react';
+import CompanyMenu from './CompanyMenu';
 import CtaButton from './ui/CtaButton.astro';
 import NavLink from './ui/NavLink.astro';
 ---
@@ -27,11 +28,7 @@ import NavLink from './ui/NavLink.astro';
         <NavLink href='#'>Pricing</NavLink>
       </li>
       <li>
-        <NavLink href='#' class='group flex items-center'>
-          <span class='mr-1'>Company</span>
-          <!-- this shouldn't be a react component, but I'm lazy -->
-          <ChevronDown size="14" className='group-hover:rotate-180 transition-all' />
-        </NavLink>
+        <CompanyMenu client:load />
       </li>
       <li class='ml-auto'>
         <NavLink href='#'>Log in</NavLink>
