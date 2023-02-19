@@ -1,5 +1,4 @@
----
-import { HTMLAttributes } from 'astro/types';
+import React from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 
 const button = cva(
@@ -29,11 +28,13 @@ const button = cva(
   }
 );
 
-export interface Props extends HTMLAttributes<'a'>, VariantProps<typeof button> {}
+export interface CtaButtonProps extends React.ComponentProps<'a'>,
+  VariantProps<typeof button> { }
 
-const { size, class: className, ...rest } = Astro.props;
----
-
-<a href='#' class={button({ size, className })} {...rest}>
-  <slot />
-</a>
+export default function CtaButton({ size, children, className = '', ...rest }: CtaButtonProps) {
+  return (
+    <a href='#' className={button({ size, className })} {...rest}>
+      {children}
+    </a>
+  )
+}

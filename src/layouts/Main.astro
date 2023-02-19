@@ -1,5 +1,5 @@
 ---
-import Navigation from '../components/Navigation.astro'
+import Navigation from '../components/Navigation';
 
 export interface Props {
   title: string;
@@ -19,7 +19,7 @@ const { title } = Astro.props;
   </head>
   <body class='bg-slate-900 text-slate-200 min-h-screen'>
     <div class='flex flex-col w-full'>
-        <Navigation />
+      <Navigation client:load />
       <slot />
     </div>
   </body>

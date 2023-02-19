@@ -11,12 +11,9 @@ export default function CompanyMenu() {
 
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       className='relative hover:cursor-default group flex items-center'>
       <span className='mr-1'>Company</span>
       <ChevronDown size='14' className='group-hover:rotate-180 transition-all' />
-      {/* <!-- Wish I could use radix primitives here, but couldn't get it working. No a11y for now :( --> */}
       <ul
         aria-hidden={!hovered}
         className={cn(
@@ -25,7 +22,7 @@ export default function CompanyMenu() {
         )}
       >
         <li
-          className='p-2 text-gray-400 hover:text-gray-200 hover:bg-gray-800 cursor-pointer rounded-md transition-colors'
+          className='transition-colors'
         >
           <a className="flex items-center" href='#'>
             <Users size='14' />
