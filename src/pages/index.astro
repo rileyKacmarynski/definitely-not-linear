@@ -1,86 +1,22 @@
 ---
 import Main from '../layouts/Main.astro';
-import ChevronRight from '../components/icons/ChevronRight.astro';
-import CtaButton from '../components/ui/CtaButton';
+import Header from '../components/Header.astro';
+import BigImage from '../components/BigImage.astro';
 ---
 
 <Main title="Not Linear - This isn't Linear">
   <main class='flex flex-col pt-12 text-center top-gradient'>
-    <div class='min-h-[800px] pt-12 -mt-12 container'>
-      <div class='mt-16 flex flex-col items-center'>
-        <a
-          class='secondary-button cursor-pointer backdrop-blur-md px-3 flex items-center font-medium leading-7 text-sm bg-white/10 border border-white/10 rounded-full transition-all duration-300 hover:bg-white/20'
-        >
-          <div>Lorem ipsum dolor sit amet</div>
-          <span class='bg-white/10 flex backdrop-blur-md items-center px-2 ml-2 -mr-2 rounded-full h-5'
-            >→</span
-          >
-        </a>
-        <h1
-          class='main-heading header-color text-5xl md:text-7xl font-regular md:font-semi-bold leading-tighter my-6 text-center tracking-tight text-white max-w-2xl'
-        >
-          Lorem ipsum dolor sit amet consectetur
-        </h1>
-        <h2 class='secondary-heading text-lg md:text-xl max-w-xl text-slate-300 mt-6'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem repellat voluptatum ratione sit sunt
-          dolorum ullam?
-        </h2>
-        <CtaButton className='cta-button mt-12'>
-          <span>Get started</span>
-          <ChevronRight classNames='ml-2' fill='white' />
-        </CtaButton>
-      </div>
+    <div class='min-h-[800px] pt-16 -mt-16 container'>
+      <Header />
+      <BigImage />
     </div>
   </main>
 </Main>
 
 <style>
-  .secondary-button {
-    opacity: 0;
-    --translate-y: 10px;
-    animation: 1200ms ease-out appear forwards;
-  }
-
-  .main-heading {
-    opacity: 0;
-    --translate-y: 15px;
-    animation: 1000ms ease-out appear forwards;
-  }
-
-  .secondary-heading {
-    opacity: 0;
-    --translate-y: 20px;
-    animation: 1250ms ease-out appear forwards;
-    animation-delay: 500ms;
-  }
-
-  .cta-button {
-    opacity: 0;
-    --translate-y: 10px;
-    animation: 1000ms ease-out appear forwards;
-    animation-delay: 750ms;
-  }
-
-  @keyframes appear {
-    from {
-      transform: translateY(calc(-1 * var(--translate-y, 10px)));
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
   .top-gradient {
     background: radial-gradient(ellipse 75% 50% at 50% -10%, hsl(217, 32%, 25%), transparent);
   }
-
-  .header-color {
-    background-image: radial-gradient(ellipse at top left, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 25%));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
 </style>
+
 <script></script>
