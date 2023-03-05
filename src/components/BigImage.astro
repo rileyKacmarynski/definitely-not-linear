@@ -1,9 +1,169 @@
 ---
-
 ---
 
-<h1>Big Image</h1>
+<section class='image-section mt-[160px] aspect-[16/9] rounded-lg'>
+  <div class='bg-gradient relative'></div>
+  <div id='zoom-root' class='zoomies-container'></div>
+</section>
+<div class='mt-[360px]'>temp placeholder</div>
 
-<style>
+<script>
+  const container = document.getElementById('zoom-root');
 
+  function addZoomie(zoomId, direction, speed) {
+    const el = document.createElement('div');
+    el.classList.add('zoom');
+    el.id = zoomId;
+
+    const distance = `${getRandom(65, 85)}%`
+
+    el.style.setProperty('--zoom-speed', `${speed}ms`);
+    el.style.setProperty('--zoom-distance', distance);
+
+    // height: 1px;
+    // width: var(--zoom-length);
+    if (direction == 'horizontal') {
+      el.style.setProperty('--zoom-gradient-direction', 'to left');
+      el.style.setProperty('--zoom-animation', 'zoom-horizontal');
+      el.style.width = 'var(--zoom-length)';
+      el.style.height = '1px';
+    } else {
+      el.style.setProperty('--zoom-gradient-direction', 'to bottom');
+      el.style.setProperty('--zoom-animation', 'zoom-vertical');
+      el.style.width = '1px';
+      el.style.height = 'var(--zoom-length)';
+      el.style.right = '0';
+    }
+
+    container.appendChild(el);
+  }
+
+  function startZoom(direction) {
+    // this sucks, probably gsap or something would probably make this easier
+
+    const zoomId = Date.now().toString();
+    const interval = getRandom(1000, 4000);
+    const speed = getRandom(1000, 4000);
+    setTimeout(() => {
+      addZoomie(zoomId, direction, speed);
+      startZoom(direction);
+    }, interval);
+
+    setTimeout(() => document.getElementById(zoomId).remove(), speed * 2);
+  }
+
+  startZoom('horizontal');
+  startZoom('vertical');
+
+  function getRandom(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+</script>
+
+<style is:global>
+  .image-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .image-section > * {
+    grid-area: 1 / 1 / 1 / 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* I can tweak this all day and it still won't look as good just leave it! */
+
+  .bg-gradient {
+    background: conic-gradient(
+      from 30deg,
+      hsl(242, 48%, 26%) 55deg,
+      hsl(264, 67%, 8%) 95deg,
+      hsl(215, 28%, 7%) 130deg,
+      hsl(215, 25%, 11%) 190deg,
+      hsl(224, 64%, 12%) 230deg,
+      hsl(217, 33%, 15%) 290deg,
+      hsl(202, 80%, 19%)
+    );
+    filter: blur(180px);
+  }
+
+  .zoomies-container {
+
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.02);
+    background-image: radial-gradient(ellipse 50% 75% at 25% 40%, rgb(90 29 229 / 20%), transparent),
+      radial-gradient(ellipse 50% 75% at 75% 50%, rgb(15 69 157 / 12%), transparent);
+    border-radius: inherit;
+  }
+
+  .zoomies-container::before {
+    content: '';
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    border-radius: inherit;
+    inset: 0px;
+    padding: 1px;
+    background: linear-gradient(to bottom, hsl(242, 47%, 24%), transparent);
+    mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
+    mask-composite: exclude;
+  }
+
+  .zoom {
+    --zoom-length: 100px;
+    --zoom-gradient-color: rgba(255, 255, 255, 0.5);
+
+    --zoom-gradient-direction: to left;
+    --zoom-animation: 'zoom-horizontal'
+    --zoom-distance: 75%;
+    --zoom-speed: 3s;
+
+    position: absolute;
+    top: 0;
+    background-image: linear-gradient(
+      var(--zoom-gradient-direction),
+      var(--zoom-gradient-color),
+      transparent
+    );
+
+    animation: var(--zoom-animation) var(--zoom-speed) forwards;
+  }
+
+  @keyframes zoom-horizontal {
+    0% {
+      left: 0%;
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      left: var(--zoom-distance);
+    }
+  }
+
+  @keyframes zoom-vertical {
+    0% {
+      top: 0%;
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      top: var(--zoom-distance);
+    }
+  }
 </style>
+
+<!-- what's stressfull here? -->
+<!-- overall animation -->
+  <!-- animate gradient -->
+  <!-- is that perpective + scale? -->
+  <!-- initial svg line thing -->
+<!-- load an image with astro image -->
