@@ -1,18 +1,44 @@
 ---
+import { Picture } from '@astrojs/image/components'
+import codeImage from '../images/code.png'
 ---
 
 <section class='image-section mt-[160px] aspect-[16/9] rounded-lg'>
-  <div class="image-container w-full h-full">
-    <div class='bg-gradient relative'></div>
+  <div class="image-container w-full h-full rounded-lg" data-play="false">
+    <div class='bg-gradient relative' data-play="false"></div>
     <div id='zoom-root' class='zoomies-container'></div>
+    <div data-play="false" class="size-auto image-animation z-10 opacity-0 overflow-hidden rounded-lg absolute inset-[1px]">
+      <Picture src={codeImage} aspectRatio="16:9" widths={[200, 400, 800, 1200]} sizes="100%" formats={['avif', 'jpeg', 'png', 'webp']} alt="Visual Studio Code" />
+    </div>
   </div>
 </section>
-<div class='mt-[360px]'>temp placeholder</div>
 
 <script>
-  const container = document.getElementById('zoom-root');
+  const options = {
+    rootMargin: '0px',
+    threshold: 1.0,
+  }
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    console.log('image Observer callback')
+    if(entries[0].isIntersecting) {
+      const elements = document.querySelectorAll('[data-play]')
+      elements.forEach(el => {
+        // @ts-ignore
+        el.dataset.play = true
+      })
+      observer.disconnect()
+    }
+
+  }, options) 
+
+  imageObserver.observe(document.querySelector('.image-container'))
+  
+  
+  startZoom('horizontal');
+  startZoom('vertical');
 
   function addZoomie(zoomId, direction, speed) {
+    const container = document.getElementById('zoom-root');
     const el = document.createElement('div');
     el.classList.add('zoom');
     el.id = zoomId;
@@ -30,7 +56,7 @@
       el.style.width = 'var(--zoom-length)';
       el.style.height = '1px';
     } else {
-      el.style.setProperty('--zoom-gradient-direction', 'to bottom');
+      el.style.setProperty('--zoom-gradient-direction', 'to top');
       el.style.setProperty('--zoom-animation', 'zoom-vertical');
       el.style.width = '1px';
       el.style.height = 'var(--zoom-length)';
@@ -54,16 +80,23 @@
     setTimeout(() => document.getElementById(zoomId).remove(), speed * 2);
   }
 
-  startZoom('horizontal');
-  startZoom('vertical');
-
   function getRandom(min, max) {
     return Math.random() * (max - min) + min;
   }
 </script>
 
 <style is:global>
+  * [data-play="false"] {
+    animation-play-state: paused !important;
+  }
+  
+  .image-animation {
+    animation: in 300ms linear forwards;
+    animation-delay: calc(var(--base-delay) + 500ms);
+  }
+  
   .image-section {
+    --base-delay: 500ms;
     perspective: 2000px;
   }
 
@@ -74,12 +107,13 @@
     grid-template-rows: 1fr;
 
     transform: rotateX(30deg);
+    perspective: 2px;
 
     animation: picture-in ease-in-out 1000ms forwards;
-    animation-delay: 1s;
+    animation-delay: var(--base-delay);
   }
 
-  .image-container > * {
+  .image-container > *:not(.size-auto) {
     grid-area: 1 / 1 / 1 / 1;
     width: 100%;
     height: 100%;
@@ -91,20 +125,22 @@
   .bg-gradient {
     background: conic-gradient(
       from 30deg,
-      hsl(242, 48%, 26%) 55deg,
-      hsl(264, 67%, 8%) 95deg,
-      hsl(215, 28%, 7%) 130deg,
-      hsl(215, 25%, 11%) 190deg,
-      hsl(224, 64%, 12%) 230deg,
-      hsl(217, 33%, 15%) 290deg,
-      hsl(202, 80%, 19%)
+      hsl(242, 70%, 43%) 55deg,
+      hsl(264, 70%, 42%) 95deg,
+      hsl(217, 51%, 33%) 130deg,
+      hsl(215, 20%, 31%) 190deg,
+      hsl(224, 59%, 18%) 230deg,
+      hsl(279, 68%, 31%) 290deg,
+      hsl(202, 57%, 39%)
     );
     filter: blur(180px);
     opacity: 0;
+    transform: scale(1);
+    animation: gradient-in ease-out 4000ms forwards;
+    animation-delay: var(--base-delay);
   }
 
   .zoomies-container {
-
     position: relative;
     background-color: rgba(255, 255, 255, 0.02);
     background-image: radial-gradient(ellipse 50% 75% at 25% 40%, rgb(90 29 229 / 20%), transparent),
@@ -118,9 +154,9 @@
     user-select: none;
     position: absolute;
     border-radius: inherit;
-    inset: 0px;
+    inset: -1px;
     padding: 1px;
-    background: linear-gradient(to bottom, hsl(242, 47%, 24%), transparent);
+    background: linear-gradient(to bottom, hsl(242, 59%, 55%), transparent);
     mask: linear-gradient(black, black) content-box content-box, linear-gradient(black, black);
     mask-composite: exclude;
   }
@@ -180,15 +216,35 @@
     50% {
       transform: scale(.8) rotateX(30deg);
     }
+    70% {
+      transform: scale(1) rotateX(0deg);
+    }
     100% {
       transform: scale(1) rotateX(0deg);
     }
   }
-</style>
 
-<!-- what's stressfull here? -->
-<!-- overall animation -->
-  <!-- animate gradient -->
-  <!-- is that perpective + scale? -->
-  <!-- initial svg line thing -->
-<!-- load an image with astro image -->
+  @keyframes gradient-in {
+    0% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    30% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes in {
+    from {
+      opacity: 0;
+    } 
+    to {
+      opacity: 1;
+    }
+  }
+</style>
